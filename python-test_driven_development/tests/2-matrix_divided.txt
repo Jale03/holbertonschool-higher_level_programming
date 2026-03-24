@@ -1,0 +1,89 @@
+Testing matrix_divided function
+>>> matrix_divided = __import__('2-matrix_divided').matrix_divided
+
+Normal case with integer matrix
+>>> matrix = [[1, 2, 3], [4, 5, 6]]
+>>> matrix_divided(matrix, 3)
+[[0.33, 0.67, 1.0], [1.33, 1.67, 2.0]]
+>>> matrix
+[[1, 2, 3], [4, 5, 6]]
+
+Float values
+>>> matrix_divided([[1.5, 2.5]], 2)
+[[0.75, 1.25]]
+
+Negative divisor
+>>> matrix_divided([[2, 4]], -2)
+[[-1.0, -2.0]]
+
+Single element matrix
+>>> matrix_divided([[3]], 3)
+[[1.0]]
+
+Multiple rows with negative divisor
+>>> matrix_divided([[3, 9], [12, 15]], -3)
+[[-1.0, -3.0], [-4.0, -5.0]]
+
+Division by zero - should raise error
+>>> matrix_divided([[1, 2]], 0)
+Traceback (most recent call last):
+...
+ZeroDivisionError: division by zero
+
+Divisor is not a number - should raise error
+>>> matrix_divided([[1, 2]], "2")
+Traceback (most recent call last):
+...
+TypeError: div must be a number
+
+Matrix is not a list - should raise error
+>>> matrix_divided("not a matrix", 2)
+Traceback (most recent call last):
+...
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Matrix is a list but not list of lists - should raise error
+>>> matrix_divided([1, 2, 3], 2)
+Traceback (most recent call last):
+...
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Matrix contains non-numeric element - should raise error
+>>> matrix_divided([[3, "9"], [15, 3]], 3)
+Traceback (most recent call last):
+...
+TypeError: matrix must be a matrix (list of lists) of integers/floats
+
+Rows have different sizes - should raise error
+>>> matrix_divided([[1, 2], [3, 4, 5]], 2)
+Traceback (most recent call last):
+...
+TypeError: Each row of the matrix must have the same size
+
+Missing div argument - should raise error
+>>> matrix_divided([[1, 2]])
+Traceback (most recent call last):
+...
+TypeError: matrix_divided() missing 1 required positional argument: 'div'
+
+Missing both arguments - should raise error
+>>> matrix_divided()
+Traceback (most recent call last):
+...
+TypeError: matrix_divided() missing 2 required positional arguments: 'matrix' and 'div'
+
+Infinity as divisor
+>>> matrix_divided([[1, 2], [3, 4]], float('inf'))
+[[0.0, 0.0], [0.0, 0.0]]
+
+NaN as divisor
+>>> matrix_divided([[1, 2]], float('nan'))
+[[nan, nan]]
+
+Infinity in matrix
+>>> matrix_divided([[1, float('inf')]], 2)
+[[0.5, inf]]
+
+NaN in matrix
+>>> matrix_divided([[1, float('nan')]], 2)
+[[0.5, nan]]
