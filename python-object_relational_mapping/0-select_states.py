@@ -1,24 +1,24 @@
 #!/usr/bin/python3
-"""List all states"""
-
-from sys import argv
+"""
+Lists all states from the database hbtn_0e_0_usa.
+"""
 import MySQLdb
-
-
-if __name__ == '__main__':
+import sys
+if __name__ == "__main__":
+    mysql_user = sys.argv[1]
+    mysql_password = sys.argv[2]
+    db_name = sys.argv[3]
     db = MySQLdb.connect(
         host="localhost",
         port=3306,
-        user=argv[1],
-        passwd=argv[2],
-        db=argv[3]
+        user=mysql_user,
+        passwd=mysql_password,
+        db=db_name
     )
-
     cursor = db.cursor()
     cursor.execute("SELECT * FROM states ORDER BY id ASC")
-
-    for state in cursor.fetchall():
-        print(state)
-
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
     cursor.close()
     db.close()
